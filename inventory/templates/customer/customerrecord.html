@@ -1,0 +1,21 @@
+{% for product in page_obj %}
+
+    
+    <tr class="table-content">
+        <td>{{ product.name }}</td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>₱ {{ product.price }}</td>
+        <td class="action-data">
+            <form action="order/{{product.id}}" method="POST">
+                {% csrf_token %}
+                <input type="number" min=1 name="buy">
+                <input type="submit" id="submit">
+            </form>
+        </td>
+    </tr>
+
+{% empty %}
+<tr>
+    <td colspan="5">No products found.</td>
+</tr>
+{% endfor %}

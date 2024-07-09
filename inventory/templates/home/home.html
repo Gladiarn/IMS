@@ -1,0 +1,179 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetStocks</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'inventory/css/home.css' %}" />
+    <!-- page icon -->
+    <link rel="icon" type="image/png" href="{% static 'inventory/images/logo.png' %}" >
+</head>
+<body>
+   
+    <div class="container">
+
+       <div class="side-bar" id="side-bar">
+
+            <ul>
+                
+                
+                <li class="logo">
+                    <a>
+                        <span>
+                            <img src="{% static 'inventory/images/logo.png' %}" alt="" class="logo-img">
+                        </span>
+                        <span class="logo-container">
+                            <img src="{% static 'inventory/images/logofont.png' %}" alt="" class="logo-font">
+                        </span>
+                    </a>
+
+                </li>
+
+                <li class="list active">
+                    <a href="/dashboard" class="anchor">
+                        <span class="icon">
+                            <ion-icon name="stats-chart-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            Dashboard
+                        </span>
+                    </a>
+                </li>
+
+                <li  class="list">
+                    <a href="/users" class="anchor">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            Users
+                        </span>
+                    </a>
+                    
+                </li>
+
+                <li  class="list">
+                    <a href="/products" class="anchor">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            
+                            Products
+                        </span>
+                    </a>
+                    
+                </li>
+
+                <li  class="list">
+                    <a href="/categories" class="anchor">
+                        <span class="icon">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            Categories
+                        </span>
+                    </a>
+                    
+                </li>
+
+                <li  class="list">
+                    <a href="/suppliers" class="anchor">
+                        <span class="icon">
+                            <ion-icon name="car-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            Suppliers
+                        </span>
+                    </a>
+                    
+                </li>
+
+
+                <li  class="signout" >
+                    <a href="/signout" class="exempt">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            Sign-Out
+                        </span>
+                    </a>
+                    
+                </li>
+
+
+
+
+            </ul>
+            
+       </div>
+
+
+       <div class="main" id="main">
+
+            <div class="nav-bar">
+
+                <div class="close-open-container">
+                        <span id="toggle" class="arrow toggled">
+                            <ion-icon name="caret-forward-outline"></ion-icon>
+                        </span>
+                </div>
+
+
+                <div class="search-bar">
+                    <input type="text" name="" id="" placeholder=".">
+                    <span class="placeholder">
+                        Search
+                    </span>
+                    <span class="search-icon">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </span>
+                </div>
+
+
+                <div class="user-greet">
+                    <span class="user-icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+
+                    <span>
+                        Welcome, <b>{{user}}</b>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="components" id="components">
+                {% block content %}
+
+
+                {% endblock %}
+            </div>
+
+
+       </div>
+
+
+
+
+    </div>
+
+
+
+    <!-- Ionicon's Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- For chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <!-- Javascript script -->
+    <script src="{% static 'inventory/scripts/home.js' %}"></script>
+    
+    
+</body>
+</html>

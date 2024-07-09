@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetStocks</title>
+
+        <!-- css -->
+    <link rel="stylesheet" href="{% static 'inventory/css/index.css' %}" />
+
+        <!-- page icon -->
+        <link rel="icon" type="image/png" href="{% static 'inventory/images/logo.png' %}" >
+</head>
+<body>
+    
+    <div class="container">
+        <div class="sign-in-container" id="sign-in-container">
+            <div class="logo-container">
+                <img src="{% static 'inventory/images/logo.png' %}" alt="" class="in-logo">
+            </div>
+
+            <h1 style="color: #a87e62;">Sign In!</h1>
+            <p>Come and Interact with <b style="color:  #a87e62;">SweetStocks</b></p>
+            <form action="login" method="POST" class="sign-in-form">
+
+                {% csrf_token %}
+                <div class="input-box">
+                    <input type="text" class="" required name="username">
+                    <span class="placeholder">USERNAME</span>
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" class="" required name="password" id="password">   
+
+                    <span class="placeholder" >PASSWORD</span>
+
+                    <img src="{% static 'inventory/images/view.png' %}" alt="" class="peeker" id="peeker">
+                </div>
+
+                <div class="remember">
+                    <div>
+                        <input type="checkbox" class="check" id="remembercheck">
+                        <label for="remembercheck" class="labelremember"><span class="remember-text">Remember Me</span></label> 
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                
+                <button class="signin-btn">SIGN IN</button>
+
+                <div class="message-container">
+                    
+
+                    {% for message in messages %}
+                    <p class="success-message">{{message}}</p>
+                        
+
+                    
+                    
+                    
+                    {% endfor %}
+                </ul>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="sign-up-container hide-signup" id="sign-up-container">
+            <div class="logo-container">
+                <img src="{% static 'inventory/images/logo.png' %}" alt="" class="in-logo">
+            </div>
+            <h1 style="color: #a87e62;">Sign Up!</h1>
+            <p>Please provide your credentials for <b style="color:  #a87e62;">SweetStocks</b></p>
+
+            <form action="/" method="POST" class="sign-up-form">
+            {% csrf_token %}
+            
+            <div class="input-box">
+                {{form.username}}
+                <span class="placeholder">USERNAME</span>
+            </div>
+            <div class="input-box">
+                {{form.password1}}
+                <span class="placeholder">PASSWORD</span>
+                <img src="{% static 'inventory/images/view.png' %}" alt="" class="peeker" id="peeker1">
+            </div>
+            <div class="input-box">
+                {{form.password2}}
+                <span class="placeholder">CONFIRM PASSWORD</span>
+                <img src="{% static 'inventory/images/view.png' %}" alt="" class="peeker" id="peeker2">
+            </div>
+
+            <div class="usertype-box">
+                {{form.usertype}}
+            </div>
+            {{form.message}}
+            
+            
+            
+            <button class="signin-btn">SIGN UP</button>
+           </form>
+        
+
+    </div>
+
+
+    <div id="blocker" class="right-blocker blocker">
+        <div class="blocker-container">
+            <div>
+                <h1 id="blocker-head">Join us now!</h1>
+                <p id="blocker-body">No account yet? Create one, it's free!</p>
+            </div>
+
+            <div class="signupbtn-container">
+                <button type="button" class="signup-btn" id="blocker-btn">SIGN UP</button>
+            </div>
+            
+
+            
+
+
+
+            <img src="{% static 'inventory/images/chocolate.png' %}" alt="">
+
+        </div>
+</div>
+
+
+    </div>
+    
+
+
+
+
+
+
+
+
+    <script src="{% static 'inventory/scripts/index.js' %}"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(){
+
+            let password = document.getElementById('password');
+            let peeker = document.getElementById('peeker');
+
+            let closed = true;
+            peeker.addEventListener('click',()=>{
+
+                if(closed === true){
+                password.setAttribute('type', 'text')
+                peeker.src = "{% static 'inventory/images/hidden.png' %}"
+            
+                }
+                else{
+                password.setAttribute('type', 'password')
+                peeker.src = "{% static 'inventory/images/view.png' %}"
+                }
+       
+                closed = !closed;
+
+
+
+
+    });
+
+            let password1 = document.getElementById('password1');
+            let peeker1 = document.getElementById('peeker1');
+            let closed1 = true;
+            
+            peeker1.addEventListener('click',()=>{
+
+            if(closed1 === true){
+            password1.setAttribute('type', 'text')
+            peeker1.src = "{% static 'inventory/images/hidden.png' %}"
+
+            }
+            else{
+            password1.setAttribute('type', 'password')
+            peeker1.src = "{% static 'inventory/images/view.png' %}"
+            }
+
+            closed1 = !closed1;
+
+        });
+
+
+            let password2 = document.getElementById('password2');
+            let peeker2 = document.getElementById('peeker2');
+            let closed2 = true;
+
+            peeker2.addEventListener('click',()=>{
+
+            if(closed2 === true){
+            password2.setAttribute('type', 'text')
+            peeker2.src = "{% static 'inventory/images/hidden.png' %}"
+
+            }
+            else{
+            password2.setAttribute('type', 'password')
+            peeker2.src = "{% static 'inventory/images/view.png' %}"
+            }
+
+            closed2 = !closed2;
+
+            });
+
+
+
+
+
+        });
+
+
+    </script>
+</body>
+</html>

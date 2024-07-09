@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'inventory/css/edit.css' %}" />
+</head>
+<body>
+
+    <div class="container">
+            <h1>Edit Product</h1>
+        <form action="updatesuppliers/{{supplier.id}}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" name="name" required value="{{supplier.name}}">
+                <span class="placeholder">NAME</span>
+            </div>
+
+            <div class="input-box">
+                <input type="text" name="contactname" required value="{{supplier.contact_name}}">
+                <span class="placeholder">CONTACT NAME</span>
+            </div>
+
+            <div class="input-box">
+                <input type="number" name="phonenumber" required value="{{supplier.phone}}">
+                <span class="placeholder">PHONE NUMBER</span>
+            </div>
+
+            <div class="input-box">
+                <input type="email" name="email" required value="{{supplier.email}}">
+                <span class="placeholder">EMAIL</span>
+            </div>
+
+            <div class="input-box">
+                <input type="text" name="address" required value="{{supplier.address}}">
+                <span class="placeholder">ADDRESS</span>
+            </div>
+            
+            {% for message in messages %}
+            <p class="success-message">{{message}}</p>
+            
+            
+        
+        
+        
+            {% endfor %}
+            <button id="form-submit" type="submit">SUBMIT</button>
+            
+            </form>
+        </div>
+
+        <a href="/home" class="back">Go back?</a>
+    </div>
+</body>
+</html>

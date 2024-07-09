@@ -1,0 +1,182 @@
+@import url('global.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+.table-container{
+    width: 100%;
+    min-height: 100%;
+    padding: 2rem 5rem;
+}
+
+table{
+
+    width: 100%;
+}
+
+th{
+    background-color: var(--background);
+    padding: .5rem;
+    font-size: 1.25rem;
+    color: var(--highlight-text);
+}
+
+th:nth-child(1){
+    border-top-left-radius: 30px;
+}
+
+th:last-child{
+    border-top-right-radius: 30px;
+}
+
+tr:nth-of-type(2n){
+    background-color: rgba(168, 126, 98, 0.226);
+}
+
+td{
+
+    text-align: center;
+    padding: .2rem;
+
+    color: var(--background);
+    font-weight: 500;
+}
+
+
+
+.action-data a{
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(184, 0, 0);
+    padding: 3px 1rem;
+}
+
+.action-data a:hover{
+    background-color: rgb(218, 0, 0);
+}
+
+.pagination-container{
+    padding: .5rem;
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+    background-color: var(--background);
+    gap: 8px;
+}
+
+.pagination-container button{
+    padding: 0 10px;
+    background-color: var(--highlight-text);
+    border: none;
+    border-radius: 5px;
+    color: var(--background);
+    font-weight: 500;
+    cursor: pointer;
+
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem;
+}
+
+.pagination-container button:hover{
+    color: white;
+}
+
+.pagination a{
+    height: 30px;
+    width: 30px;
+    background-color: var(--highlight-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 500;
+    color: var(--background);
+    border-radius: 50%;
+    text-decoration: none;
+
+}
+.pagination .active{
+    color: white;
+}
+
+
+.pagination a:hover{
+
+    color: white;
+}
+
+#prev{
+    height: 30px;
+    width: 30px;
+    background-color: var(--highlight-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 500;
+    color: var(--background);
+    text-decoration: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
+
+#next{
+    height: 30px;
+    width: 30px;
+    background-color: var(--highlight-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 500;
+    color: var(--background);
+    text-decoration: none;
+    
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#prev:hover,#next:hover{
+    color: white;
+}
+
+#pagination{
+    gap: 8px;
+    display: flex;
+}
+
+
+.action-data input{
+    width: 80px;
+    padding: 5px;
+    border: 1px solid var(--background);
+}
+
+#submit{
+    padding: 5px;
+    border: 1px solid var(--background) ;
+    color: white;
+    border-radius: 10px;
+    background-color: var(--highlight-text);
+    cursor: pointer;
+}
+
+#submit:hover{
+    background-color: var(--background);
+}

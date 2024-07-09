@@ -1,0 +1,18 @@
+{% for supplier in page_obj %}
+<tr class="table-content">
+    <td>{{ supplier.id }}</td>
+    <td>{{ supplier.name }}</td>
+    <td>{{ supplier.contact_name }}</td>
+    <td>{{ supplier.phone }}</td>
+    <td>{{ supplier.email }}</td>
+    <td>{{ supplier.address }}</td>
+
+    
+    <td class="action-data"><a href="editsuppliers/{{supplier.id}}">Edit</a></td>
+    <td class="action-data"><a href="deletesuppliers/{{supplier.id}}">Delete</a></td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No products found.</td>
+</tr>
+{% endfor %}    

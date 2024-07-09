@@ -1,0 +1,180 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'inventory/css/dashboard.css' %}" />
+  </head>
+  <body>
+    {% block content %}
+
+    <div class="dashboard-container">
+      <div class="card-container">
+        <div class="user-card card">
+          <div class="card-head" data-text="Users"><p>{{usercount}}</p></div>
+          <div class="card-icon">
+            <ion-icon name="accessibility-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="category-card card">
+          <div class="card-head" data-text="Categories"><p>{{categorycount}}</p></div>
+          <div class="card-icon">
+            <ion-icon name="list-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="product-card card">
+          <div class="card-head" data-text="Products"><p>{{productscount}}</p></div>
+          <div class="card-icon">
+            <ion-icon name="cube-outline"></ion-icon>
+          </div>
+        </div>
+
+
+        <div class="sales-card card">
+          <div class="card-head" data-text="Sales"><p>₱ {{total_price}}</p></div>
+          <div class="card-icon">
+            <ion-icon name="cash-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="graph-container">
+
+          <div class="bar-graph">
+            <canvas id="bar-graph"></canvas>
+          </div>
+
+          <div class="line-graph">
+            <canvas id="line-graph"></canvas>
+          </div>
+
+          <div class="doughnut-graph">
+            <canvas id="doughnut-graph"></canvas>
+          </div>
+
+      </div>
+    </div>
+
+    {% endblock %}
+    <!-- Javascript script -->
+    <script src="{% static 'inventory/scripts/dashboard.js' %}"></script>
+
+    <script>
+      // Ensure the ctx variable is declared only once at a broader scope
+
+      function DisplayGraph() {
+        var ctx = ctx || document.getElementById("bar-graph");
+
+        if (ctx) {
+          // Check if the chart instance already exists
+          if (window.barGraphInstance) {
+            window.barGraphInstance.destroy();
+            window.linegraphInstance.destroy();
+            window.doughnutgraphInstance.destroy();
+          }
+
+          // Create a new chart instance and store it globally
+          window.barGraphInstance = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+              datasets: [
+                {
+                  backgroundColor: ['rgb(49, 31, 19)'],
+                  label: "Users Per Month",
+                  data: {{ data|safe }},
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+            },
+          });
+        } else {
+          console.error("Graph context not found");
+        }
+
+        const line = document.getElementById("line-graph");
+
+window.linegraphInstance = new Chart(line, {
+    type: "line",
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        datasets: [{
+            label: "# of Votes",
+            data: [0,0,0,0,0,644.55,0,0,0,0,0,0],
+            borderColor: [
+                'rgb(168, 126, 98)',  // Light Bronze
+            ],
+            backgroundColor: 'rgb(49, 31, 19)', // Transparent background for the line area
+            borderWidth: 2,
+            pointBackgroundColor: 'rgb(49, 31, 19)', // White points
+            pointBorderColor: 'rgba(0, 0, 0, 1)', // Dark borders for points
+            pointRadius: 5
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+            line: {
+                tension: 0.2 // Slightly curved lines for better visual appeal
+            }
+        }
+    }
+});
+        const doughnut = document.getElementById("doughnut-graph");
+
+        
+        window.doughnutgraphInstance = new Chart(doughnut, {
+          type: "doughnut",
+          data: {
+            labels: {{ category_labels|safe }},
+            datasets: [{
+            label: "# of Votes",
+            data: {{ product_counts|safe }},
+            backgroundColor: [
+                'rgba(90, 49, 43, 1)', // Dark Burgundy
+                'rgba(35, 55, 75, 1)',  // Deep Navy
+                'rgba(75, 75, 45, 1)',  // Dark Olive
+                'rgba(25, 45, 25, 1)',  // Forest Green
+                'rgba(75, 35, 75, 1)',  // Deep Purple
+                'rgba(115, 65, 34, 1)'  // Dark Bronze
+            ],
+            borderColor: [
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)'
+            ],
+            borderWidth: 3
+        }]
+           
+          },
+          options: {
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

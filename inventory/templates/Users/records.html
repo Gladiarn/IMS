@@ -1,0 +1,15 @@
+
+
+{% for user in page_obj %}
+<tr class="table-content">
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.usertype }}</td>
+    <td>{{ user.date_joined }}</td>
+    <td class="action-data"><a href="deleteuser/{{user.id}}">Delete</a></td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No users found.</td>
+</tr>
+{% endfor %}    

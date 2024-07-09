@@ -1,0 +1,225 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'inventory/css/user.css' %}" />
+</head>
+<body>
+    {% block content %}
+
+    <div class="table-container">
+        
+        <div class="table-holder" id="table-holder">
+            <!-- Dynamic table -->
+            <table id="user-table">
+                <thead>
+                    <tr class="table-head">
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>User Type</th>
+                        <th>Date Joined</th>
+                        <th class="action-head">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="table-body">
+                    
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <button id="add-btn">ADD RECORD</button>
+
+            <a href="#" id="prev" class="">
+                <ion-icon name="caret-back-outline"></ion-icon>
+            </a>
+            <div id="pagination" class="pagination">
+                {% for num in page_obj.paginator.page_range %}
+                <a href="records/{{num}}" class="page" data-page="{{ num }}">{{ num }}</a>
+                {% endfor %}
+            </div>
+            <a href="#" id="next" class="">
+                <ion-icon name="caret-forward-outline"></ion-icon>
+            </a>
+        </div>
+<!-- add modal -->
+        <div class="add-modal-container closed-modal" id="add-modal-container">
+            <div class="add-modal modal">
+
+                <div class="add-container">
+                    <span class="exit-icon">
+                       <ion-icon name="close-outline" ></ion-icon>   
+                    </span>
+                    
+                    <form action="{% url 'adduser' %}" class="form-modal" method="POST">
+                            {% csrf_token %}
+                        <h1>Add another Record</h1>
+
+                        <div class="input-box">
+                            {{form.username}}
+                            <span class="placeholder">USERNAME</span>
+                        </div>
+
+                        <div class="input-box">
+                            {{form.password1}}
+                            <span class="placeholder">PASSWORD</span>
+                        </div>
+
+                        <div class="input-box">
+                            {{form.password2}}
+                            <span class="placeholder">CONFIRM PASSWORD</span>
+                        </div>
+                        
+                        <div>
+                        {{form.usertype}}
+                        </div>
+
+                        
+                        {% for message in messages %}
+                        <p class="success-message">{{message}}</p>
+                        
+
+                    
+                    
+                    
+                        {% endfor %}
+                        <button id="form-submit" type="submit">ADD</button>
+                    </form>
+                </div>    
+
+                
+            
+            </div>
+        </div>
+
+
+    </div>
+    
+    {% endblock %}
+
+    <!-- Ionicon's Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+    function renderRecord() {
+    let anchors = Array.from(document.getElementsByClassName("page"));
+    let currentPage = 1;
+    displayRecord('records/1');
+        
+
+    
+//automatically adds active class on first pagination link
+    if(anchors.length > 0){
+    anchors[0].classList.add('active');
+    }
+
+
+    
+
+    //adds event listener to every pagination anchor rendered by django
+    anchors.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = event.target.closest('a').getAttribute('href');
+            displayRecord(url);
+            currentPage = parseInt(event.target.dataset.page);
+            console.log(currentPage);
+            
+            anchors.forEach(link=>{
+                link.classList.remove('active');
+            })
+
+            link.classList.add('active');
+        });
+    });
+
+    let prev = document.getElementById('prev');
+    prev.addEventListener('click', ()=>{
+        if(currentPage > 1){
+            currentPage = currentPage - 1;
+            displayRecord(`records/${currentPage}`);
+            
+            anchors.forEach(link =>{
+                link.classList.remove('active');
+            })
+
+            anchors[currentPage-1].classList.add('active')
+        }
+    })
+
+
+    let next = document.getElementById('next');
+    next.addEventListener('click', ()=>{
+        if(currentPage < anchors.length){
+            currentPage = currentPage + 1;
+            displayRecord(`records/${currentPage}`);
+            
+            anchors.forEach(link =>{
+                link.classList.remove('active');
+            })
+
+            anchors[currentPage -1].classList.add('active')
+        }
+    })
+
+
+
+
+
+
+    //handles ajax rendering of tables
+    async function displayRecord(url){
+        try{
+            response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Response Not Ok');
+            }
+            const processed = await response.text();
+            const container = document.getElementById('table-body');
+            container.innerHTML = processed;
+        }catch{
+
+        }
+        
+    }
+
+
+    // modals
+
+    let addModal = document.getElementById('add-modal-container');
+    let addBtn = document.getElementById('add-btn');
+
+    let editModal = document.getElementById('edit-modal-container');
+
+    addBtn.addEventListener('click', ()=>{
+        addModal.classList.remove('closed-modal');
+    })
+
+    let exitBtn = Array.from(document.getElementsByClassName('exit-icon'));
+
+    exitBtn.forEach(exit =>{
+        exit.addEventListener('click', ()=>{
+            addModal.classList.add('closed-modal');
+            editModal.classList.add('closed-modal');
+        })
+    })
+
+
+
+
+
+
+    }
+    </script>
+</body>
+</html>

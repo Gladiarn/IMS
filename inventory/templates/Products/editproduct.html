@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'inventory/css/edit.css' %}" />
+</head>
+<body>
+
+    <div class="container">
+            <h1>Edit Product</h1>
+        <form action="updateproduct/{{product.id}}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" name="name" id="" required value="{{product.name}}">
+                <span class="placeholder">NAME</span>
+            </div>
+
+            <div class="input-box">
+                <input type="number" name="price" id="" step="0.01" required value="{{product.price}}">
+                <span class="placeholder">PRICE</span>
+            </div>
+
+            <div class="input-box">
+                <input type="text" name="sku" id="" required value="{{product.sku}}">
+                <span class="placeholder">SKU</span>
+            </div>
+            
+            <div class="input-box" id="dropdown">
+                <div>
+                    <label for="category">Category</label>
+                    <select name="category" id="category" >
+                        {% for category in categories %}
+                            <option value="{{category.name}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+
+                <div>
+                    <label for="supplier">SUPPLIER</label>
+                    <select name="supplier" id="supplier">
+                        {% for supplier in suppliers %}
+                            <option value="{{supplier.name}}">{{ supplier.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="input-box">
+                <input type="number" name="stock" id="" required value="{{product.stock_quantity}}" >
+                <span class="placeholder">STOCK</span>
+            </div>
+
+            <div class="input-box">
+                <input type="number" name="reorder" id="" required value="{{product.reorder_level}}">
+                <span class="placeholder">REORDER LEVEL</span>
+            </div>
+            
+            {% for message in messages %}
+            <p class="success-message">{{message}}</p>
+            
+            
+        
+        
+        
+            {% endfor %}
+            <button id="form-submit" type="submit">SUBMIT</button>
+            
+            </form>
+        </div>
+
+        <a href="/home" class="back">Go back?</a>
+    </div>
+</body>
+</html>

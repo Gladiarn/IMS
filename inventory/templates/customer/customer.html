@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetStock</title>
+        <!-- page icon -->
+    <link rel="icon" type="image/png" href="{% static 'inventory/images/logo.png' %}" >
+        <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'inventory/css/customer.css' %}" />
+</head>
+<body>
+    <div class="table-container">
+        
+        <div class="table-holder" id="table-holder">
+            <!-- Dynamic table -->
+            <table id="user-table">
+                <caption>Welcome, {{user}}</caption>
+                <thead>
+                    <tr class="table-head">
+                        <th>Name</th>
+                        <th>Stock</th>
+                        <th>Price</th>
+                        <th class="action-head">Buy Quantity</th>
+                    </tr>
+                </thead>
+
+                <tbody id="table-body">
+                    
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <a href="signout"><button id="add-btn">SIGNOUT</button></a>
+            <a href="#" id="prev" class="">
+                <ion-icon name="caret-back-outline"></ion-icon>
+            </a>
+            <div id="pagination" class="pagination">
+                {% for num in page_obj.paginator.page_range %}
+                <a href="customerrecord/{{num}}" class="page" data-page="{{ num }}">{{ num }}</a>
+                {% endfor %}
+            </div>
+            <a href="#" id="next" class="">
+                <ion-icon name="caret-forward-outline"></ion-icon>
+            </a>
+        </div>
+
+            <!-- Ionicon's Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+
+        let anchors = Array.from(document.getElementsByClassName("page"));
+        let currentPage = 1;
+        displayProduct('customerrecord/1')
+        
+        //automatically adds active class on first pagination link
+        if(anchors.length > 0){
+        anchors[0].classList.add('active');
+        }
+    
+        //adds event listener to every pagination anchor rendered by django
+        anchors.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const url = event.target.closest('a').getAttribute('href');
+                displayProduct(url);
+                currentPage = parseInt(event.target.dataset.page);
+                console.log(currentPage);
+                
+                anchors.forEach(link=>{
+                    link.classList.remove('active');
+                })
+    
+                link.classList.add('active');
+            });
+        });
+    
+        //left right button
+        let prev = document.getElementById('prev');
+        prev.addEventListener('click', ()=>{
+            if(currentPage > 1){
+                currentPage = currentPage - 1;
+                displayProduct(`customerrecord/${currentPage}`);
+                
+                anchors.forEach(link =>{
+                    link.classList.remove('active');
+                })
+    
+                anchors[currentPage-1].classList.add('active')
+            }
+        })
+    
+    
+        let next = document.getElementById('next');
+        next.addEventListener('click', ()=>{
+            if(currentPage < anchors.length){
+                currentPage = currentPage + 1;
+                displayProduct(`customerrecord/${currentPage}`);
+                
+                anchors.forEach(link =>{
+                    link.classList.remove('active');
+                })
+    
+                anchors[currentPage -1].classList.add('active')
+            }
+        })
+    
+        //handles ajax rendering of tables
+    
+        async function displayProduct(url){
+            try{
+                response = await fetch(url)
+                if (!response.ok) {
+                    throw new Error('Response Not Ok');
+                }
+                const processed = await response.text();
+                const container = document.getElementById('table-body');
+                container.innerHTML = processed;
+            }catch{
+                console.log(Error)
+            }
+            
+        }
+    
+    </script>
+</body>
+</html>

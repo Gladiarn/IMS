@@ -1,0 +1,21 @@
+{% for product in page_obj %}
+<tr class="table-content">
+    <td>{{ product.id }}</td>
+    <td>{{ product.name }}</td>
+    <td>₱ {{ product.price }}</td>
+    <td>{{ product.sku }}</td>
+    <td>{{ product.category }}</td>
+    <td>{{ product.supplier }}</td>
+    <td>{{ product.stock_quantity }}</td>
+    <td>{{ product.reorder_level }}</td>
+    <td>{{ product.created_at }}</td>
+    <td>{{ product.created_by }}</td>
+    
+    <td class="action-data"><a href="editproduct/{{product.id}}">Edit</a></td>
+    <td class="action-data"><a href="deleteproduct/{{product.id}}">Delete</a></td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No products found.</td>
+</tr>
+{% endfor %}    
